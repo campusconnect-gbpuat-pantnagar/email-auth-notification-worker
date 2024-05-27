@@ -2,13 +2,37 @@ import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
 import { QueueModule } from './libraries/queues/queue.module';
 import { AuthNotificationProcessor } from './app/processors/auth.notification.processor';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EmailQueues } from './libraries/queues/queue.constants';
-
+import { MailerModule } from '@nestjs-modules/mailer';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import * as path from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+
+    MailerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        transport: {
+          host: configService.get('SMTP_SERVICE_HOST'),
+          // For SSL and TLS connection
+          auth: {
+            // Account gmail address
+            user: configService.get('SMTP_SERVICE_EMAIL'),
+            pass: configService.get('SMTP_SERVICE_PASSWORD'),
+          },
+        },
+        template: {
+          dir: path.join(__dirname + '/templates/'),
+          adapter: new EjsAdapter(),
+          options: {
+            strict: false,
+          },
+        },
+      }),
+      inject: [ConfigService],
     }),
     BullModule.forRoot({
       connection: {

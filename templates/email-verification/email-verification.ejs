@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Verification</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Work+Sans:wght@300;400;500;600&display=swap"
+    />
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #f8f6f4;
+        position: relative;
+        font-family: "Work Sans", sans-serif;
+      }
+
+      .bg_color {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fafafa;
+        z-index: -10;
+      }
+
+      .container {
+        border-radius: 12px;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 1rem 0.5rem;
+        background-color: #0a0a0a;
+      }
+
+      .container .logo_image {
+        width: 80%;
+        height: 100%;
+        margin: 0 auto;
+        padding: 5px;
+      }
+      .logo_image > img {
+        width: 100%;
+        height: 100%;
+      }
+      .main_container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+        width: 100%;
+      }
+      .username {
+        padding: 1rem 0;
+      }
+
+      .content_container {
+        margin-top: 2rem;
+        width: 100%;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .content_container > h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        font-weight: 700;
+      }
+
+      .content_container > img {
+        min-width: 300px;
+        height: 300px;
+      }
+
+      .message > p {
+        text-align: center;
+        line-height: 1.5rem;
+        font-weight: 500;
+        width: 80%;
+        margin: 1rem auto;
+        font-size: 0.8rem;
+      }
+
+      .content_container > h1 {
+        font-size: 2.2rem;
+        letter-spacing: 0.6rem;
+        font-weight: 600;
+      }
+      .main_container_image {
+        width: 100%;
+      }
+      .main_container_image > img {
+        width: 100%;
+      }
+      .content_container > p {
+        text-align: center;
+        line-height: 1.5rem;
+        font-weight: 500;
+        width: 80%;
+        margin: 1rem auto;
+        font-size: 0.8rem;
+      }
+
+      .team {
+        width: 80%;
+        margin: auto auto;
+        padding-top: 4rem;
+
+        padding-bottom: 4rem;
+      }
+
+      .team > P {
+        font-weight: 600;
+        margin: 0.3rem 0;
+        color: #0a0a0a;
+      }
+      footer {
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+        padding: 3rem 1rem;
+        background-color: #0a0a0a;
+        width: 100%;
+        text-align: center;
+      }
+
+      footer > h2 {
+        margin: 1rem auto;
+        font-size: 2rem;
+        color: white;
+        text-align: center;
+      }
+
+      .line {
+        width: 90%;
+        height: 1px;
+        background-color: #f8f6f4;
+        margin: 1.2rem auto;
+      }
+
+      .privacy_policy {
+        text-align: center;
+        width: 80%;
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+        color: #f8f6f4;
+        margin: 1rem auto;
+      }
+      .support_email {
+        text-align: center;
+        font-size: 0.9rem;
+        /* word-wrap: break-word; */
+        /* width: 80%; */
+        color: #f8f6f4;
+        line-height: 1.3rem;
+        margin: 1rem auto;
+        font-size: 0.8rem;
+      }
+
+      .unsubscribe {
+        text-align: center;
+        color: #f8f6f4;
+        margin: 1rem auto;
+        font-size: 0.7rem;
+      }
+
+      .unsubscribe > a {
+        color: #f8f6f4;
+        text-decoration: underline;
+      }
+
+      .copyrights {
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        height: 60px;
+        width: 100%;
+        background-color: #0a0a0a;
+        text-align: center;
+        font-size: 0.69rem;
+      }
+
+      .copyrights > span {
+        color: wheat;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background color  -->
+    <div class="bg_color"></div>
+    <!-- Content -->
+    <div class="container">
+      <!-- Logo Image -->
+      <div class="logo_image">
+        <img
+          src="https://ucarecdn.com/8175f2cd-6ada-434b-999c-3f36c14d4b0f/cc_logo_horizontal_white.png"
+          alt="logo"
+        />
+      </div>
+
+      <div class="main_container">
+        <!-- Content -->
+        <div class="content_container">
+          <h2 class="username">Hi <%= name %>,</h2>
+
+          <div class="main_container_image">
+            <img
+              src="https://ucarecdn.com/8d77d754-f683-4097-98ea-83596fa9f27d/WhatsApp_Image_20240526_at_130821_95b82b02removebgpreview.png"
+              alt="hero_image"
+              class="hero-image"
+            />
+          </div>
+          <div class="message">
+            <p class="welcome">Welcome to CampusConnect!</p>
+            <p>
+              To complete your registration, please verify your email address by
+              entering the OTP below:
+            </p>
+          </div>
+
+          <h1><%= otp %></h1>
+
+          <p>Your OTP is valid for 5 minutes.</p>
+          <p>
+            If you didn’t request this verification, you can ignore this email.
+          </p>
+        </div>
+        <div class="team">
+          <p>Best Regards,</p>
+          <p>Team CampusConnect</p>
+        </div>
+      </div>
+      <footer>
+        <h2>Get In Touch</h2>
+        <div class="line"></div>
+        <div>
+          <!-- Icons -->
+        </div>
+        <p class="privacy_policy">
+          If you have any questions regarding your data, please visit our
+          <a href="#">Privacy Policy</a>. Need help? Contact us at
+        </p>
+        <p class="support_email">
+          Need help? Contact us at support@campusconnect.gbpuat.tech
+        </p>
+        <p class="unsubscribe">
+          To unsubscribe or manage your email preferences,
+          <a href="#">click here</a>.
+        </p>
+      </footer>
+      <div class="copyrights">
+        <span>&#169; 2024 CampusConnect. All Rights Reserved.</span>
+      </div>
+    </div>
+  </body>
+</html>
