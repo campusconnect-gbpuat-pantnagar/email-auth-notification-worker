@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { QueueModule } from './libraries/queues/queue.module';
-import { AuthNotificationProcessor } from './app/processors/auth.notification.processor';
+import { QueueModule } from '../../libraries/queues/queue.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EmailQueues } from './libraries/queues/queue.constants';
+import { EmailQueues } from '../../libraries/queues/queue.constants';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import * as path from 'path';
+import { AuthNotificationProcessor } from './processors/auth.notification.processor';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,7 +25,7 @@ import * as path from 'path';
           },
         },
         template: {
-          dir: path.join(__dirname + '/templates/'),
+          dir: path.resolve(__dirname, '../../../templates'),
           adapter: new EjsAdapter(),
           options: {
             strict: false,
@@ -51,7 +51,7 @@ import * as path from 'path';
         backoff: {
           // Optional backoff settings for retrying failed jobs
           type: 'exponential',
-          delay: 60000, // Initial delay of 1 min
+          delay: 600, // Initial delay of 1 min
         },
       },
     }),
