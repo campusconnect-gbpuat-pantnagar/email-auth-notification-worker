@@ -49,7 +49,7 @@ export class AuthNotificationProcessor extends WorkerHost {
     await this._mailService.sendMail({
       to: email,
       from: `CampusConnect ${this._configService.get<string>('SMTP_SERVICE_EMAIL')}`,
-      subject: `Welcome to CampusConnect! Verify Your Emai`,
+      subject: `Welcome to CampusConnect! Verify Your Email.`,
       template: 'email-verification/email-verification.ejs',
       context,
     });

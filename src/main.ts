@@ -15,7 +15,7 @@ async function bootstrap() {
     const protocol = configService.get<string>('PROTOCOL');
     await app.listen(port);
     Logger.log(
-      `🚀 email auth notification working is running on: ${protocol}://${host}:${port}/${globalPrefix}`,
+      `🚀 email auth notification worker is running on: ${protocol}://${host}:${port}/${globalPrefix}`,
     );
   } catch (error) {
     Logger.warn(error);
