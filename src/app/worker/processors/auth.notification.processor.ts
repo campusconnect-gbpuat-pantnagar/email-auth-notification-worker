@@ -34,7 +34,7 @@ export class AuthNotificationProcessor extends WorkerHost {
         case QueueEventJobPattern.ACCOUNT_DELETION_EMAIL:
           const AccountDeletionJobData = job as Job<AccountDeletionJob['data']>;
           await this.sendAccountDeletionEmail(AccountDeletionJobData);
-          return;
+          break;
         default:
           break;
       }
