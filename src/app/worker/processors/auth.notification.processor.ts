@@ -2,7 +2,11 @@ import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 import { Injectable, Logger } from '@nestjs/common';
 import { EmailQueues } from 'src/libraries/queues/queue.constants';
 import { Job } from 'bullmq';
-import { QueueEventJobPattern, VerifyOtpJob } from 'src/libraries/queues/jobs';
+import {
+  AccountDeletionJob,
+  QueueEventJobPattern,
+  VerifyOtpJob,
+} from 'src/libraries/queues/jobs';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 @Processor(EmailQueues.AUTH_NOTIFICATION, {
@@ -18,14 +22,19 @@ export class AuthNotificationProcessor extends WorkerHost {
   ) {
     super();
   }
-  async process(job: Job<VerifyOtpJob['data'], number, string>): Promise<void> {
-    // we are getting the gbpuatEmail, otp,name
-    // ✅ TODO: sending email to user
+  async process(
+    job: Job<VerifyOtpJob['data'] | AccountDeletionJob['data'], number, string>,
+  ): Promise<void> {
     try {
       switch (job.name) {
         case QueueEventJobPattern.VERIFY_OTP:
-          await this.sendVerificationEmail(job);
+          const VerifyOtpJobData = job as Job<VerifyOtpJob['data']>;
+          await this.sendVerificationEmail(VerifyOtpJobData);
           break;
+        case QueueEventJobPattern.ACCOUNT_DELETION_EMAIL:
+          const AccountDeletionJobData = job as Job<AccountDeletionJob['data']>;
+          await this.sendAccountDeletionEmail(AccountDeletionJobData);
+          return;
         default:
           break;
       }
@@ -41,7 +50,7 @@ export class AuthNotificationProcessor extends WorkerHost {
   async sendVerificationEmail(job: Job<VerifyOtpJob['data']>) {
     // send email verification  to user
     const { email, otp, name } = job.data;
-    console.log(job.data);
+    console.log(job.data, 'Verification email');
     const context = {
       name: name,
       otp,
@@ -51,6 +60,23 @@ export class AuthNotificationProcessor extends WorkerHost {
       from: `CampusConnect ${this._configService.get<string>('SMTP_SERVICE_EMAIL')}`,
       subject: `Welcome to CampusConnect! Verify Your Email.`,
       template: 'email-verification/email-verification.ejs',
+      context,
+    });
+  }
+  async sendAccountDeletionEmail(job: Job<AccountDeletionJob['data']>) {
+    // send email verification  to user
+    const { email, username, date, keepAccountLink } = job.data;
+    console.log(job.data, 'Verification email');
+    const context = {
+      username,
+      date,
+      keepAccountLink,
+    };
+    await this._mailService.sendMail({
+      to: email,
+      from: `CampusConnect ${this._configService.get<string>('SMTP_SERVICE_EMAIL')}`,
+      subject: `Your CampusConnect account is scheduled to be deleted.`,
+      template: 'account-deletion/account-deletion.ejs',
       context,
     });
   }
